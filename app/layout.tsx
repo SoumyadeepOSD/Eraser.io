@@ -4,6 +4,7 @@ import { cn } from "@/lib/utils"
 import { Inter as FontSans } from "next/font/google"
 import { ConvexClientProvider } from "./ConvexClientProvider";
 import {getKindeServerSession} from "@kinde-oss/kinde-auth-nextjs/server";
+import { Toaster } from "@/components/ui/sonner";
 
 
 const fontSans = FontSans({
@@ -30,6 +31,7 @@ export default function RootLayout({
         )}>
           <ConvexClientProvider>
             {children}
+            <Toaster />
           </ConvexClientProvider>
         </body>
     </html>
