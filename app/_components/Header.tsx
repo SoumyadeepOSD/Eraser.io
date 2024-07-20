@@ -1,5 +1,8 @@
+"use client"
+
 import Image from 'next/image'
 import React from 'react'
+import { RegisterLink, LoginLink } from "@kinde-oss/kinde-auth-nextjs/server";
 
 type Props = {}
 
@@ -73,19 +76,15 @@ const Header = (props: Props) => {
 
                     <div className="flex items-center gap-4">
                         <div className="sm:flex sm:gap-4">
-                            <a
-                                className="block rounded-md px-5 py-2.5 text-sm font-medium text-white transition"
-                                href="#"
-                            >
-                                Login
-                            </a>
 
-                            <a
-                                className="hidden rounded-md bg-gray-100 px-5 py-2.5 text-sm font-medium text-black transition sm:block "
-                                href="#"
-                            >
+                            <LoginLink className="block rounded-md px-5 py-2.5 text-sm font-medium text-white transition">
+                                Login
+                            </LoginLink>
+
+                            <RegisterLink className="hidden rounded-md bg-gray-100 px-5 py-2.5 text-sm font-medium text-black transition sm:block ">
                                 Register
-                            </a>
+                            </RegisterLink>
+
                         </div>
 
                         <button

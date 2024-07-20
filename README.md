@@ -42,3 +42,4 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/deploym
 [2]. Tailwind & SHADCN for custom css components
 [3]. Convex for DB
 [4]. HyperUI for prebuilt components# Eraser.io
+[5]. Kinde for Auth
