@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import "./globals.css";
 import { cn } from "@/lib/utils"
 import { Inter as FontSans } from "next/font/google"
+import { ConvexClientProvider } from "./ConvexClientProvider";
+import {getKindeServerSession} from "@kinde-oss/kinde-auth-nextjs/server";
 
 
 const fontSans = FontSans({
@@ -19,12 +21,17 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  
   return (
     <html lang="en">
-      <body className={cn(
+        <body className={cn(
           "min-h-screen bg-background font-sans antialiased",
           fontSans.variable
-        )}>{children}</body>
+        )}>
+          <ConvexClientProvider>
+            {children}
+          </ConvexClientProvider>
+        </body>
     </html>
   );
 }
