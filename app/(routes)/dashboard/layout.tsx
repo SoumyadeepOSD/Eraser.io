@@ -4,6 +4,7 @@ import { useConvex } from 'convex/react';
 import { useRouter } from 'next/navigation';
 import React, { useEffect, useState } from 'react'
 import { toast } from 'sonner';
+import SideNav from './_components/SideNav';
 
 type Props = {
     children: React.ReactNode
@@ -40,14 +41,21 @@ const DashBoardLayout = ({ children }: Props) => {
         }
     }
 
-    useEffect(()=>{
+    useEffect(() => {
         email && checkTeam();
-    },[email]);
-    
+    }, [email]);
+
 
     return (
         <div>
-            {children}
+            <div className="grid grid-cols-4">
+                <div>
+                    <SideNav />
+                </div>
+                <div className="grid-cols-3">
+                    {children}
+                </div>
+            </div>
         </div>
     )
 }

@@ -1,5 +1,6 @@
 "use client";
 
+import { Button } from '@/components/ui/button';
 import { api } from '@/convex/_generated/api';
 import { LogoutLink } from '@kinde-oss/kinde-auth-nextjs/server';
 import { useConvex, useMutation } from 'convex/react';
@@ -56,8 +57,11 @@ export default function DashBoard() {
 
   return (
     <div>
-      <h1>DashBoard</h1>
-      <LogoutLink>Logout</LogoutLink>
+      <LogoutLink>
+        <Button>
+          Logout
+        </Button>
+      </LogoutLink>
     </div>
   );
 }
