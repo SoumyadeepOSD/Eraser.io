@@ -7,6 +7,7 @@ import { useState } from 'react';
 import { useConvex } from 'convex/react';
 import { api } from '@/convex/_generated/api';
 import { fileInterface } from '../../dashboard/_components/FileList';
+import Canvas from '../_components/Canvas';
 
 const Workspace = ({params}:any) => {
   const [triggerSave, setTriggerSave] = useState(false);
@@ -36,7 +37,9 @@ const Workspace = ({params}:any) => {
           
           
           {/* Whiteboard/canvas */}
-          <div className="bg-red-400 h-screen">Canvas</div>
+          <div className="h-screen border-l border-gray-300">
+              <Canvas/>
+          </div>
       </div>
     </div>
   );
