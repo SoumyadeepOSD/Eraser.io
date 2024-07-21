@@ -1,7 +1,7 @@
 "use client";
 import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
-import { ChevronDown, LogOut, Settings, Users } from 'lucide-react';
+import { ChevronDown, LayoutGrid, LogOut, Settings, Users } from 'lucide-react';
 import {
     Popover,
     PopoverContent,
@@ -12,6 +12,7 @@ import { Separator } from "@/components/ui/separator";
 import { useConvex } from 'convex/react';
 import { api } from '@/convex/_generated/api';
 import { useRouter } from 'next/navigation';
+import { Button } from '@/components/ui/button';
 
 type Props = {
     user: any;
@@ -133,6 +134,16 @@ const SideNavTopSection = ({ user }: Props) => {
                     )}
                 </PopoverContent>
             </Popover>
+
+
+            {/* All files button */}
+            <Button 
+                variant='outline'
+                className="w-full justify-start gap-2 font-bold mt-8 bg-gray-100"
+            >
+                <LayoutGrid className="h-5 w-5"/>
+                All Files
+            </Button>
         </div>
     );
 };

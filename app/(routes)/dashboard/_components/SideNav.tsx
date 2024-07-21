@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import SideNavTopSection from './SideNavTopSection';
+import SideNavBottomSection from './SideNavBottomSection';
 
 type Props = {}
 
@@ -13,11 +14,19 @@ const SideNav = (props: Props) => {
             setUser(data.user);
         })
     },[]);
+
+
     return (
         <div
-            className="bg-gray-100 h-screen fixed w-72 border-r p-6"
+            className="h-screen fixed w-72 border-r p-6 flex flex-col"
         >
+            <div className="flex-1">
            <SideNavTopSection user={user}/>
+            </div>
+
+            <div>
+           <SideNavBottomSection/>
+            </div>
         </div>
     )
 }
