@@ -18,7 +18,7 @@ type Props = {
   onFileCreate: () => void
 }
 
-const SideNavBottomSection = ({onFileCreate}: any) => {
+const SideNavBottomSection = ({ onFileCreate, totalFiles }: any) => {
   const menuList = [
     {
       id: 1,
@@ -65,21 +65,21 @@ const SideNavBottomSection = ({onFileCreate}: any) => {
           <DialogHeader>
             <DialogTitle>Create New File</DialogTitle>
             <DialogDescription>
-              <Input placeholder="Enter file name" onChange={(e)=>setFileInput(e.target.value)}/>
+              <Input placeholder="Enter file name" onChange={(e) => setFileInput(e.target.value)} />
             </DialogDescription>
           </DialogHeader>
           <DialogFooter>
-          <DialogClose asChild>
-            <Button 
-              type="button" 
-              className="bg-blue-600 hover:bg-blue-700" 
-              disabled={!(fileInput&&fileInput.length>0)}
-              onClick={()=>onFileCreate(fileInput)}
-            >
-              Create
-            </Button>
-          </DialogClose>
-        </DialogFooter>
+            <DialogClose asChild>
+              <Button
+                type="button"
+                className="bg-blue-600 hover:bg-blue-700"
+                disabled={!(fileInput && fileInput.length > 0)}
+                onClick={() => onFileCreate(fileInput)}
+              >
+                Create
+              </Button>
+            </DialogClose>
+          </DialogFooter>
         </DialogContent>
       </Dialog>
 
@@ -87,15 +87,17 @@ const SideNavBottomSection = ({onFileCreate}: any) => {
 
 
       {/* Progress Bar */}
-      <div
-        className=" h-4 w-full bg-gray-200 rounded-full mt-3"
-      >
-        <div className="h-4 w-[40%] bg-blue-600 rounded-full"></div>
+      <div className="h-4 w-full bg-gray-200 rounded-full mt-3">
+        <div
+          style={{ width: `${totalFiles * 20}%` }}
+          className="h-4 bg-blue-600 rounded-full"
+        ></div>
       </div>
 
 
+
       <h2 className="text-[12px] mt-3">
-        <strong>1</strong> out of <strong>5</strong> files used
+        <strong>{totalFiles}</strong> out of <strong>5</strong> files used
       </h2>
       <h2 className="text-[12px] mt-1">Upgrade your plan for unlimited access</h2>
     </div>
