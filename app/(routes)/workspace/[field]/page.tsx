@@ -1,5 +1,6 @@
 import React from 'react'
 import WorkSpaceHeader from '../_components/WorkSpaceHeader'
+import Editor from '../_components/Editor';
 
 
 const Workspace = ({params}:any) => {
@@ -10,7 +11,9 @@ const Workspace = ({params}:any) => {
       {/* WorkSpace Layout */}
       <div className="grid grid-cols-1 md:grid-cols-2">
           {/* Document */}
-          <div className="bg-blue-400 h-screen">Document</div>
+          <div className="h-screen">
+            <Editor/>
+          </div>
 
           
           
