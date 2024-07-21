@@ -11,6 +11,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import { Archive, MoreHorizontal } from 'lucide-react';
+import { useRouter } from 'next/navigation';
 
 type Props = {}
 
@@ -26,18 +27,13 @@ interface fileInterface {
 }
 
 const FileList = (props: Props) => {
-  const { fileList_, setFileList_, user } = useContext(FileListContext);
+  const { fileList_, setFileList_, user} = useContext(FileListContext);
   const [fileList, setFileList] = useState<any>();
-  const [isLoading, setisLoading] = useState<boolean>(true);
+  const router = useRouter();
   useEffect(() => {
-    fileList_ && setFileList(fileList_);
-    console.log(fileList);
-    setisLoading(false);
-  }, [isLoading, fileList])
+    fileList_ && setFileList(fileList_); 
+  }, [fileList_])
 
-if(fileList && isLoading){
-  return <h1>Loading Data...</h1>
-}
   return (
     <div className="mt-10">
       <div className="overflow-x-auto">
@@ -54,7 +50,11 @@ if(fileList && isLoading){
           <tbody className="divide-y divide-gray-200">
             {
               fileList && fileList.map((file: fileInterface, index: number) => (
-                <tr key={index}>
+                <tr 
+                  key={index} 
+                  className="odd:bg-gray-50 hover:cursor-pointer" 
+                  onClick={()=>{router.push(`/workspace/${file._id}`)}}
+                >
                   <td className="whitespace-nowrap px-4 py-2 font-medium text-gray-900">{file.fileName}</td>
                   <td className="whitespace-nowrap px-4 py-2 text-gray-700">{moment(file._creationTime).format("DD/MM/YYYY")}</td>
                   <td className="whitespace-nowrap px-4 py-2 text-gray-700">{moment(file._creationTime).format("DD/MM/YYYY")}</td>

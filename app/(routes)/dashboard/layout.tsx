@@ -50,7 +50,7 @@ const DashBoardLayout = ({ children }: Props) => {
 
     return (
         <div>
-            <FileListContext.Provider value={{fileList_, setFileList_, user}}>
+            <FileListContext.Provider value={{fileList_, setFileList_, user, checkTeam}}>
                 <div className="grid grid-cols-4">
                     <div className="h-screen w-72 fixed">
                         <SideNav />
