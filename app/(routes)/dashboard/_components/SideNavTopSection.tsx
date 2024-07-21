@@ -16,6 +16,7 @@ import { Button } from '@/components/ui/button';
 
 type Props = {
     user: any;
+    setActiveTeamInfo: any
 };
 
 type TeamInterface = {
@@ -25,7 +26,7 @@ type TeamInterface = {
     _id: string;
 };
 
-const SideNavTopSection = ({ user }: Props) => {
+const SideNavTopSection = ({ user, setActiveTeamInfo }: Props) => {
     const menu = [
         {
             id: 1,
@@ -44,6 +45,10 @@ const SideNavTopSection = ({ user }: Props) => {
     const router = useRouter();
     const [teamList, setTeamList] = useState<TeamInterface[] | undefined>();
     const [activeTeam, setActiveTeam] = useState<TeamInterface | undefined>();
+
+    useEffect(()=>{
+        activeTeam && setActiveTeamInfo(activeTeam);
+    },[activeTeam]);
 
     const getTeamList = async () => {
         const result = await convex.query(api.team.getTeam, { email: user?.email });

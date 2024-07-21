@@ -14,6 +14,7 @@ import type {
   FilterApi,
   FunctionReference,
 } from "convex/server";
+import type * as files from "../files.js";
 import type * as team from "../team.js";
 import type * as user from "../user.js";
 
@@ -26,6 +27,7 @@ import type * as user from "../user.js";
  * ```
  */
 declare const fullApi: ApiFromModules<{
+  files: typeof files;
   team: typeof team;
   user: typeof user;
 }>;
