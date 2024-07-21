@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react';
 import EditorJS from '@editorjs/editorjs';
 import Header from '@editorjs/header';
 //@ts-ignore
@@ -15,7 +15,7 @@ import { useMutation } from 'convex/react';
 import { api } from '@/convex/_generated/api';
 import { toast } from 'sonner';
 
-function Editor({ onSaveTrigger, fileId }: any) {
+function Editor({ onSaveTrigger, fileId, fileData }: any) {
     const rawDocument = {
         "time": 2234356646,
         "blocks": [{
@@ -36,9 +36,20 @@ function Editor({ onSaveTrigger, fileId }: any) {
         ],
         "version": "2.5.1"
     }
+
     const ref = useRef<EditorJS>();
     const [document, setDocument] = useState(rawDocument);
-    const initEditor = () => {
+
+    useEffect(() => {
+        let parsedData;
+        try {
+            parsedData = fileData ? JSON.parse(fileData.document) : rawDocument;
+        } catch (error) {
+            console.error('Error parsing JSON data:', error);
+            parsedData = rawDocument;
+        }
+        setDocument(parsedData);
+
         const editor = new EditorJS({
             tools: {
                 header: {
@@ -65,19 +76,24 @@ function Editor({ onSaveTrigger, fileId }: any) {
                     inlineToolbar: true,
                 },
             },
-
             holder: 'editorjs',
-            data: document
+            data: parsedData,
         });
+
         ref.current = editor;
-    }
-    useEffect(() => {
-        initEditor();
-    }, []);
+
+        // Cleanup editor instance on unmount
+        return () => {
+            if (ref.current) {
+                ref.current.destroy();
+            }
+        };
+    }, [fileData]);
 
     useEffect(() => {
-        console.log("Trigger value", onSaveTrigger);
-        onSaveTrigger && onSaveDocument();
+        if (onSaveTrigger) {
+            onSaveDocument();
+        }
     }, [onSaveTrigger]);
 
     const updateDocument = useMutation(api.files.updateDocument);
@@ -91,9 +107,9 @@ function Editor({ onSaveTrigger, fileId }: any) {
                     document: JSON.stringify(outputData),
                 }).then((res) => {
                     toast.success("Document saved successfully");
-                }, (e) => {
-                    toast.error(`Some error ocuured while saving the document ${e}`);
-                })
+                }).catch((e) => {
+                    toast.error(`Some error occurred while saving the document: ${e}`);
+                });
             }).catch((error) => {
                 console.log('Saving failed', error);
             });
@@ -104,7 +120,7 @@ function Editor({ onSaveTrigger, fileId }: any) {
         <div>
             <div id='editorjs'></div>
         </div>
-    )
+    );
 }
 
-export default Editor
+export default Editor;

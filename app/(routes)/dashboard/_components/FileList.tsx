@@ -15,7 +15,7 @@ import { useRouter } from 'next/navigation';
 
 type Props = {}
 
-interface fileInterface {
+export interface fileInterface {
   archive: boolean,
   createdBy: string,
   document: string,
