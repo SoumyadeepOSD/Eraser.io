@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation';
 import React, { useEffect, useState } from 'react'
 import { toast } from 'sonner';
 import SideNav from './_components/SideNav';
+import { FileListContext } from '@/app/_context/FileListContext';
 
 type Props = {
     children: React.ReactNode
@@ -12,7 +13,8 @@ type Props = {
 
 const DashBoardLayout = ({ children }: Props) => {
 
-    const [email, setEmail] = useState("");
+    const [user, setUser] = useState<any>("");
+    const [fileList_, setFileList_] = useState();
     const convex = useConvex();
     const router = useRouter();
 
@@ -20,7 +22,7 @@ const DashBoardLayout = ({ children }: Props) => {
         try {
             const response = await fetch("/api/kindeSession")
             const data = await response.json();
-            setEmail(data.user?.email);
+            setUser(data?.user);
         } catch (error) {
             console.log(error);
         }
@@ -33,7 +35,7 @@ const DashBoardLayout = ({ children }: Props) => {
 
     const checkTeam = async () => {
 
-        const result = await convex.query(api.team.getTeam, { email: email });
+        const result = await convex.query(api.team.getTeam, { email: user?.email });
         if (!result.length) {
 
             router.push("teams/create");
@@ -42,20 +44,22 @@ const DashBoardLayout = ({ children }: Props) => {
     }
 
     useEffect(() => {
-        email && checkTeam();
-    }, [email]);
+        user?.email && checkTeam();
+    }, [user?.email]);
 
 
     return (
         <div>
-            <div className="grid grid-cols-4">
-                <div>
-                    <SideNav />
+            <FileListContext.Provider value={{fileList_, setFileList_, user}}>
+                <div className="grid grid-cols-4">
+                    <div className="h-screen w-72 fixed">
+                        <SideNav />
+                    </div>
+                    <div className="col-span-4 ml-72">
+                        {children}
+                    </div>
                 </div>
-                <div className="grid-cols-3">
-                    {children}
-                </div>
-            </div>
+            </FileListContext.Provider>
         </div>
     )
 }

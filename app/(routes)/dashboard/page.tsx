@@ -1,10 +1,12 @@
 "use client";
 
+import Header from './_components/Header';
 import { Button } from '@/components/ui/button';
 import { api } from '@/convex/_generated/api';
 import { LogoutLink } from '@kinde-oss/kinde-auth-nextjs/server';
 import { useConvex, useMutation } from 'convex/react';
 import React, { useEffect, useState } from 'react';
+import FileList from './_components/FileList';
 
 type Props = {}
 
@@ -56,12 +58,9 @@ export default function DashBoard() {
   }, [convex, createUser]);
 
   return (
-    <div>
-      <LogoutLink>
-        <Button>
-          Logout
-        </Button>
-      </LogoutLink>
+    <div className="m-8">
+      <Header />
+      <FileList/>
     </div>
   );
 }

@@ -1,13 +1,14 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import SideNavTopSection from './SideNavTopSection';
 import SideNavBottomSection from './SideNavBottomSection';
 import { useConvex, useMutation } from 'convex/react';
 import { api } from '@/convex/_generated/api';
 import { toast } from 'sonner';
+import { FileListContext } from '@/app/_context/FileListContext';
 
-type Props = {}
 
-const SideNav = (props: Props) => {
+
+const SideNav = () => {
     const [user, setUser] = useState<any>(null);
     useEffect(() => {
         fetch("/api/kindeSession")
@@ -20,7 +21,7 @@ const SideNav = (props: Props) => {
 
     const createFile = useMutation(api.files.createFile);
     const convex = useConvex();
-  
+    const { fileList_,setFileList_ } = useContext(FileListContext);
     const onFileCreate = (fileName: string) => {
         console.log("File created:", fileName);
         createFile({
@@ -45,6 +46,7 @@ const SideNav = (props: Props) => {
     const getFiles = async() => {
         const result = await convex.query(api.files.getFiles, { teamId: activeTeam?._id });
         console.log(result);
+        setFileList_(result);
         setTotalFiles(result.length);
     }
     useEffect(()=>{
