@@ -31,14 +31,22 @@ const Workspace = ({params}:any) => {
       <div className="grid grid-cols-1 md:grid-cols-2">
           {/* Document */}
           <div className="h-screen">
-            <Editor onSaveTrigger={triggerSave} fileId={params.field} fileData={fileData}/>
+            <Editor 
+              onSaveTrigger={triggerSave} 
+              fileId={params.field} 
+              fileData={fileData}
+            />
           </div>
 
           
           
           {/* Whiteboard/canvas */}
           <div className="h-screen border-l border-gray-300">
-              <Canvas/>
+              <Canvas
+                onSaveTrigger={triggerSave} 
+                fileId={params.field} 
+                fileData={fileData}
+              />
           </div>
       </div>
     </div>
