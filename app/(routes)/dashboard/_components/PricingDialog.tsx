@@ -12,8 +12,9 @@ import {
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
 
+type Props = {}
   
-const PricingDialog = () => {
+const PricingDialog = (props: Props) => {
   return (
     <DialogContent className="max-w-4xl">
     <DialogHeader>

@@ -5,7 +5,8 @@ import Link from "next/link";
 import Header from "./_components/Header";
 import Hero from "./_components/Hero";
 
-export default function Home() {
+type Props = {};
+export default function Home(props: Props) {
   return (
     <div>
       <Header/>

@@ -10,7 +10,7 @@ import FileList from './_components/FileList';
 
 type Props = {}
 
-export default function DashBoard() {
+export default function DashBoard(props: Props) {
   const [user, setUser] = useState<any>(null);
   const [authStatus, setAuthStatus] = useState<any>(null);
   const convex = useConvex();

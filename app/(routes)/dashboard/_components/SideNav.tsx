@@ -7,8 +7,9 @@ import { toast } from 'sonner';
 import { FileListContext } from '@/app/_context/FileListContext';
 
 
+type Props = {};
 
-const SideNav = () => {
+const SideNav = (props: Props) => {
     const [user, setUser] = useState<any>(null);
     useEffect(() => {
         fetch("/api/kindeSession")
