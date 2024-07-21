@@ -11,31 +11,34 @@ import Checklist from '@editorjs/checklist';
 import SimpleImage from "@editorjs/simple-image";
 //@ts-ignore
 import Paragraph from '@editorjs/paragraph';
+import { useMutation } from 'convex/react';
+import { api } from '@/convex/_generated/api';
+import { toast } from 'sonner';
 
-function Editor() {
+function Editor({ onSaveTrigger, fileId }: any) {
     const rawDocument = {
-        "time":2234356646,
+        "time": 2234356646,
         "blocks": [{
-            data:{
+            data: {
                 text: "Hello World!",
-                level:2
+                level: 2
             },
             id: "123",
-            type:"header"
+            type: "header"
         },
         {
-            data:{
-                level:4
+            data: {
+                level: 4
             },
             id: "1234",
-            type:"header"
+            type: "header"
         }
-    ],
+        ],
         "version": "2.5.1"
     }
     const ref = useRef<EditorJS>();
     const [document, setDocument] = useState(rawDocument);
-    const initEditor=()=>{
+    const initEditor = () => {
         const editor = new EditorJS({
             tools: {
                 header: {
@@ -49,7 +52,7 @@ function Editor() {
                     class: List,
                     inlineToolbar: true,
                     config: {
-                      defaultStyle: 'unordered'
+                        defaultStyle: 'unordered'
                     }
                 },
                 checklist: {
@@ -62,17 +65,42 @@ function Editor() {
                     inlineToolbar: true,
                 },
             },
-           
+
             holder: 'editorjs',
             data: document
         });
         ref.current = editor;
     }
-    useEffect(()=>{
+    useEffect(() => {
         initEditor();
-    },[]);
+    }, []);
 
-        return (
+    useEffect(() => {
+        console.log("Trigger value", onSaveTrigger);
+        onSaveTrigger && onSaveDocument();
+    }, [onSaveTrigger]);
+
+    const updateDocument = useMutation(api.files.updateDocument);
+
+    const onSaveDocument = () => {
+        if (ref.current) {
+            ref.current.save().then((outputData) => {
+                console.log('Article Data', outputData);
+                updateDocument({
+                    _id: fileId,
+                    document: JSON.stringify(outputData),
+                }).then((res) => {
+                    toast.success("Document saved successfully");
+                }, (e) => {
+                    toast.error(`Some error ocuured while saving the document ${e}`);
+                })
+            }).catch((error) => {
+                console.log('Saving failed', error);
+            });
+        }
+    }
+
+    return (
         <div>
             <div id='editorjs'></div>
         </div>
