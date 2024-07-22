@@ -1,8 +1,7 @@
 import {getKindeServerSession} from "@kinde-oss/kinde-auth-nextjs/server";
 import {NextResponse} from "next/server";
 
-type Props = {};
-export async function GET(props: Props) {
+export async function GET() {
   const {getUser, isAuthenticated, getPermissions, getOrganization} = getKindeServerSession();
   const user = getUser();
   const authenticated = isAuthenticated();
