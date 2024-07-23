@@ -24,3 +24,13 @@ export const createUser = mutation({
         return await ctx.db.insert('user', args);
     }
 });
+
+// export const getUserById = query({
+//     args: {
+//         _id: v.id('user'),
+//     },
+//     handler: async (ctx, args) => {
+//         const result = await ctx.db.get(args._id);
+//         return result;
+//     }
+// })

@@ -6,6 +6,7 @@ export const createFile =mutation({
         fileName: v.string(),
         teamId: v.string(),
         createdBy: v.string(),
+        members: v.array(v.string()),
         archive: v.boolean(),
         document: v.string(),
         whiteboard: v.string(),
@@ -63,6 +64,28 @@ export const getFileById = query({
     },
     handler: async(ctx, args)=>{
         const result = await ctx.db.get(args._id);
+        return result;
+    }
+});
+
+export const updateFile = mutation({
+    args:{
+        _id: v.id('files'),
+        archive: v.boolean()
+    },
+    handler: async(ctx, args)=>{
+        const result = await ctx.db.patch(args._id, {archive: args.archive});
+        return result;
+    }
+});
+
+
+export const deleteFile = mutation({
+    args:{
+        _id: v.id('files'),
+    },
+    handler: async(ctx, args)=>{
+        const result = await ctx.db.delete(args._id);
         return result;
     }
 });

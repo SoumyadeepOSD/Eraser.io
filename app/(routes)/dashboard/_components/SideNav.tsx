@@ -29,6 +29,7 @@ const SideNav = (props: Props) => {
             fileName: fileName,
             teamId: activeTeam?._id,
             createdBy: user?.email,
+            members: [],
             archive: false,
             document: '',
             whiteboard: '',
@@ -64,6 +65,7 @@ const SideNav = (props: Props) => {
 
             <div>
                 <SideNavBottomSection 
+                     fileList_={fileList_}
                     totalFiles={totalFiles}
                     onFileCreate={onFileCreate} 
                 />

@@ -1,3 +1,4 @@
+import Link from 'next/link'
 import React from 'react'
 
 type Props = {}
@@ -20,12 +21,12 @@ const Hero = (props: Props) => {
                     </p>
 
                     <div className="mt-8 flex flex-wrap justify-center gap-4">
-                        <a
+                        <Link
                             className="block w-full rounded bg-white px-12 py-3 text-sm font-medium text-black shadow hover:bg-gray-400 focus:outline-none focus:ring active:bg-red-500 sm:w-auto"
-                            href="#"
+                            href={"/dashboard"}
                         >
                             Try eraser
-                        </a>
+                        </Link>
                     </div>
                 </div>
             </div>

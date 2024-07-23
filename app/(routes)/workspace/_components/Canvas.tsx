@@ -4,7 +4,7 @@ import { fileInterface } from '../../dashboard/_components/FileList';
 import { useMutation } from 'convex/react';
 import { api } from '@/convex/_generated/api';
 
-function Canvas({onSaveTrigger,fileId,fileData}:{onSaveTrigger:boolean, fileId:any, fileData:fileInterface}) {
+function Canvas({onSaveTrigger,fileId,fileData}:{onSaveTrigger:boolean, fileId:any, fileData:fileInterface|undefined}) {
     
     const [whiteBoardData, setWhiteBoardData]=useState<any>();
 
