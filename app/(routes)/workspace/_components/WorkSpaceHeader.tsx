@@ -14,6 +14,9 @@ const WorkSpaceHeader = ({onSave, fileData}:any) => {
             <div className="flex items-center gap-4">
                 <h2>
                     {fileData&&fileData.createdBy}
+                    <span className="font-medium text-sm text-green-500 border-2 border-green-500 px-1 py-1 rounded-lg">
+                        Owner
+                    </span>
                 </h2>
                 <Button className="h-8 text-[12px] gap-2 bg-yellow-600 hover:bg-yellow-700" onClick={()=>onSave()}>
                     <Save className="h-4 w-4"/>

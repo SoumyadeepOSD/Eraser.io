@@ -15,6 +15,7 @@ const DashBoardLayout = ({ children }: Props) => {
 
     const [user, setUser] = useState<any>("");
     const [fileList_, setFileList_] = useState();
+    const [teamLength, setTeamLength] = useState(0);
     const convex = useConvex();
     const router = useRouter();
 
@@ -34,10 +35,9 @@ const DashBoardLayout = ({ children }: Props) => {
 
 
     const checkTeam = async () => {
-
         const result = await convex.query(api.team.getTeam, { email: user?.email });
+        setTeamLength(result.length);
         if (!result.length) {
-
             router.push("teams/create");
             toast.error(`No of teams: ${result.length}`);
         }
@@ -45,7 +45,8 @@ const DashBoardLayout = ({ children }: Props) => {
 
     useEffect(() => {
         user?.email && checkTeam();
-    }, [user?.email]);
+        teamLength && checkTeam();
+    }, [user?.email, teamLength]);
 
 
     return (

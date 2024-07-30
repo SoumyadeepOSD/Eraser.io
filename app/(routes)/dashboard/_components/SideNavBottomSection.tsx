@@ -1,5 +1,5 @@
 import { Button } from '@/components/ui/button'
-import { Archive, Flag, Github } from 'lucide-react'
+import { Archive, Bell, Github, Plus, PlusCircle } from 'lucide-react'
 import React, { useContext, useState } from 'react'
 import {
   Dialog,
@@ -23,14 +23,8 @@ const SideNavBottomSection = ({ fileList_ ,onFileCreate, totalFiles }: any) => {
   const menuList = [
     {
       id: 1,
-      name: 'Flag',
-      icon: Flag,
-      path: ''
-    },
-    {
-      id: 2,
-      name: 'Github',
-      icon: Github,
+      name: 'Notification',
+      icon: Bell,
       path: ''
     },
     {
@@ -65,7 +59,7 @@ const SideNavBottomSection = ({ fileList_ ,onFileCreate, totalFiles }: any) => {
       <Dialog open={isArchiveSheetOpen} onOpenChange={setIsArchiveSheetOpen}>
         <DialogContent className="max-w-4xl">
           <DialogHeader>
-            <DialogTitle>Are you absolutely sure?</DialogTitle>
+            <DialogTitle>Archive Files</DialogTitle>
             <DialogDescription>
               {/* Content of Archive */}
               <ArchiveDialog/>
@@ -78,8 +72,9 @@ const SideNavBottomSection = ({ fileList_ ,onFileCreate, totalFiles }: any) => {
       {/* Add New File Button */}
       <Dialog>
         <DialogTrigger className="w-full" asChild>
-          <Button className="w-full bg-blue-600 hover:bg-blue-700 justify-start mt-3">
-            New File
+          <Button className="w-full bg-blue-600 hover:bg-blue-700 mt-3 flex flex-row items-center justify-center gap-2">
+            <h1>New File</h1>
+            <PlusCircle/>
           </Button>
         </DialogTrigger>
         {totalFiles < Constant.MAX_FREE_FILE ? (

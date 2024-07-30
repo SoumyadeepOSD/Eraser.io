@@ -31,7 +31,7 @@ const ArchiveDialog = () => {
   };
 
   const restoreArchive = async (id: any, fileName: string) => {
-    const updatedFileList = fileList_?.map((file: any) => 
+    const updatedFileList = fileList_?.map((file: any) =>
       file._id === id ? { ...file, archive: false } : file
     );
     setFileList_(updatedFileList);
@@ -48,30 +48,41 @@ const ArchiveDialog = () => {
     }
   };
 
+  // Check for archived files
+  const archivedFiles = fileList_?.filter((file:any) => file.archive) || [];
+
   return (
-    <table className="min-w-full divide-y-2 divide-gray-200 bg-white text-sm">
-      <thead className="ltr:text-left rtl:text-right">
-        <tr>
-          <td className="whitespace-nowrap px-4 py-2 font-medium text-gray-900">File Name</td>
-          <td className="whitespace-nowrap px-4 py-2 font-medium text-gray-900">Created At</td>
-          <td className="whitespace-nowrap px-4 py-2 font-medium text-gray-900">Edited</td>
-          <td className="whitespace-nowrap px-4 py-2 font-medium text-gray-900">Actions</td>
-        </tr>
-      </thead>
-      <tbody className="divide-y divide-gray-200">
-        {fileList_?.map((file: any, index: any) => file.archive && (
-          <tr key={file._id} className="odd:bg-gray-50">
-            <td className="whitespace-nowrap px-4 py-2 font-medium text-gray-900">{file.fileName}</td>
-            <td className="whitespace-nowrap px-4 py-2 text-gray-700">{moment(file._creationTime).format("DD/MM/YYYY")}</td>
-            <td className="whitespace-nowrap px-4 py-2 text-gray-700">{moment(file._creationTime).format("DD/MM/YYYY")}</td>
-            <td className="flex items-center justify-evenly">
-              <Trash2 color='red' className="hover:cursor-pointer" onClick={() => deleteFiles(file._id, file.fileName)} />
-              <ArchiveRestore color='green' className="hover:cursor-pointer" onClick={() => restoreArchive(file._id, file.fileName)} />
-            </td>
-          </tr>
-        ))}
-      </tbody>
-    </table>
+    <div>
+      {archivedFiles.length === 0 ? (
+        <div className="p-4 text-center text-gray-600">
+          There is no archive file.
+        </div>
+      ) : (
+        <table className="min-w-full divide-y-2 divide-gray-200 bg-white text-sm">
+          <thead className="ltr:text-left rtl:text-right">
+            <tr>
+              <td className="whitespace-nowrap px-4 py-2 font-medium text-gray-900">File Name</td>
+              <td className="whitespace-nowrap px-4 py-2 font-medium text-gray-900">Created At</td>
+              <td className="whitespace-nowrap px-4 py-2 font-medium text-gray-900">Edited</td>
+              <td className="whitespace-nowrap px-4 py-2 font-medium text-gray-900">Actions</td>
+            </tr>
+          </thead>
+          <tbody className="divide-y divide-gray-200">
+            {archivedFiles.map((file: any) => (
+              <tr key={file._id} className="odd:bg-gray-50">
+                <td className="whitespace-nowrap px-4 py-2 font-medium text-gray-900">{file.fileName}</td>
+                <td className="whitespace-nowrap px-4 py-2 text-gray-700">{moment(file._creationTime).format("DD/MM/YYYY")}</td>
+                <td className="whitespace-nowrap px-4 py-2 text-gray-700">{moment(file._creationTime).format("DD/MM/YYYY")}</td>
+                <td className="flex items-center justify-evenly">
+                  <Trash2 color='red' className="hover:cursor-pointer" onClick={() => deleteFiles(file._id, file.fileName)} />
+                  <ArchiveRestore color='green' className="hover:cursor-pointer" onClick={() => restoreArchive(file._id, file.fileName)} />
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      )}
+    </div>
   );
 };
 

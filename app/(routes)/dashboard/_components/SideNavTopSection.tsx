@@ -1,7 +1,7 @@
 "use client";
-import React, { useEffect, useState } from 'react';
+import React, { Key, useContext, useEffect, useState } from 'react';
 import Image from 'next/image';
-import { ChevronDown, LayoutGrid, LogOut, Settings, Users } from 'lucide-react';
+import { ChevronDown, LayoutGrid, LogOut, Settings, Trash2, Users } from 'lucide-react';
 import {
     Popover,
     PopoverContent,
@@ -9,10 +9,12 @@ import {
 } from "@/components/ui/popover";
 import { LogoutLink } from '@kinde-oss/kinde-auth-nextjs/server';
 import { Separator } from "@/components/ui/separator";
-import { useConvex } from 'convex/react';
+import { useConvex, useMutation } from 'convex/react';
 import { api } from '@/convex/_generated/api';
 import { useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/button';
+import { toast, Toaster } from 'sonner';
+import { FileListContext } from '@/app/_context/FileListContext';
 
 type Props = {
     user: any;
@@ -43,17 +45,28 @@ const SideNavTopSection = ({ user, setActiveTeamInfo }: Props) => {
     ];
     const convex = useConvex();
     const router = useRouter();
-    const [teamList, setTeamList] = useState<TeamInterface[] | undefined>();
-    const [activeTeam, setActiveTeam] = useState<TeamInterface | undefined>();
+    const [teamList, setTeamList] = useState<TeamInterface[] | undefined | any>();
+    const [activeTeam, setActiveTeam] = useState<TeamInterface | undefined | any>();
+    const deleteTeam = useMutation(api.team.DeleteTeam);
+    const {checkTeam} = useContext(FileListContext);
 
     useEffect(()=>{
         activeTeam && setActiveTeamInfo(activeTeam);
     },[activeTeam]);
 
+    // Get Team
     const getTeamList = async () => {
         const result = await convex.query(api.team.getTeam, { email: user?.email });
-        setTeamList(result);
-        setActiveTeam(result[0]);
+        const joinedTeam = await convex.query(api.team.getTeamByMemberId, {memberId: user.id});
+        const allTeams = [...result, ...joinedTeam];
+        
+        setTeamList(allTeams);
+
+        // Set the first team as active if available
+        if (allTeams.length > 0) {
+            setActiveTeam(allTeams[0]);
+            setActiveTeamInfo(allTeams[0]); // Optional: Call this function to notify parent or perform any side-effect
+        }
     };
 
     useEffect(() => {
@@ -68,8 +81,25 @@ const SideNavTopSection = ({ user, setActiveTeamInfo }: Props) => {
         }
     }
 
+    // Delete Team 
+    const onDeleteTeam = async(id:any, teamName:string)=>{
+        try {
+            const result = await deleteTeam({_id: id});
+            console.log(result);
+            toast.success(`${teamName} deleted successfully`);
+            const updatedFileList = teamList?.filter((team: any) => team._id !== id);
+            setTeamList(updatedFileList);
+            getTeamList();
+            checkTeam();
+        } catch (error) {
+            console.log(error);
+            toast.error(`Failed to delete ${teamName}`);
+        }
+    }
+
     return (
         <div>
+            <Toaster/>
             <Popover>
                 <PopoverTrigger>
                     <div className="flex items-center gap-3 hover:bg-slate-200 p-2 rounded-lg cursor-pointer">
@@ -88,13 +118,17 @@ const SideNavTopSection = ({ user, setActiveTeamInfo }: Props) => {
                 <PopoverContent className="ml-7 p-4">
                     {/* Team Section */}
                     <div>
-                        {teamList?.map((item, index) => (
+                        {teamList?.map((item:any, index:Key) => (
                             <h2 
                                 key={index} 
-                                className={`flex gap-2 items-center p-2 hover:bg-blue-500 hover:text-white cursor-pointer rounded-lg text-sm ${activeTeam?._id === item._id&&'bg-blue-500 text-white'}`}
+                                className={`flex flex-row justify-between items-center p-2 hover:bg-blue-500 hover:text-white cursor-pointer rounded-lg text-sm ${activeTeam?._id === item._id&&'bg-blue-500 text-white'}`}
                                 onClick={() => setActiveTeam(item)}
                             >
                                 {item.teamName}
+                                {/* Delete Team */}
+                                <Trash2 color="white" fill="red" onClick={()=>{
+                                    onDeleteTeam(item._id, item.teamName);
+                                }}/>
                             </h2>
                         ))}
                     </div>
@@ -139,7 +173,6 @@ const SideNavTopSection = ({ user, setActiveTeamInfo }: Props) => {
                     )}
                 </PopoverContent>
             </Popover>
-
 
             {/* All files button */}
             <Button 

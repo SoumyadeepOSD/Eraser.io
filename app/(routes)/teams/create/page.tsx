@@ -33,6 +33,7 @@ const CreateTeam = (props: Props) => {
     createTeam({
       teamName: teamName,
       createdBy: email,
+      members: [],
     }).then((data)=>{
       console.log(data);
       if(data)
