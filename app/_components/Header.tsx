@@ -13,66 +13,11 @@ const Header = (props: Props) => {
             <div className="mx-auto flex h-16 max-w-screen-xl items-center gap-8 px-4 sm:px-6 lg:px-8">
                 <a className="block text-teal-600 dark:text-teal-300" href="#">
                     <span className="sr-only">Home</span>
-                    <Image src="/logo.svg" alt="logo" width={100} height={100} />
+                    <Image src="/logo.svg" alt="logo" width={50} height={50} />
                 </a>
 
                 <div className="flex flex-1 items-center justify-end md:justify-between">
                     <nav aria-label="Global" className="hidden md:block">
-                        <ul className="flex items-center gap-6 text-sm">
-                            <li>
-                                <a
-                                    className="text-white transition hover:text-gray-500/75 dark:text-white dark:hover:text-white/75"
-                                    href="#"
-                                >
-                                    About
-                                </a>
-                            </li>
-
-                            <li>
-                                <a
-                                    className="text-white transition hover:text-gray-500/75 dark:text-white dark:hover:text-white/75"
-                                    href="#"
-                                >
-                                    Careers
-                                </a>
-                            </li>
-
-                            <li>
-                                <a
-                                    className="text-white transition hover:text-gray-500/75 dark:text-white dark:hover:text-white/75"
-                                    href="#"
-                                >
-                                    History
-                                </a>
-                            </li>
-
-                            <li>
-                                <a
-                                    className="text-white transition hover:text-gray-500/75 dark:text-white dark:hover:text-white/75"
-                                    href="#"
-                                >
-                                    Services
-                                </a>
-                            </li>
-
-                            <li>
-                                <a
-                                    className="text-white transition hover:text-gray-500/75 dark:text-white dark:hover:text-white/75"
-                                    href="#"
-                                >
-                                    Projects
-                                </a>
-                            </li>
-
-                            <li>
-                                <a
-                                    className="text-white transition hover:text-gray-500/75 dark:text-white dark:hover:text-white/75"
-                                    href="#"
-                                >
-                                    Blog
-                                </a>
-                            </li>
-                        </ul>
                     </nav>
 
                     <div className="flex items-center gap-4">
