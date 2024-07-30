@@ -60,33 +60,6 @@ const Header = (props: Props) => {
     };
 
 
-    const sendInvitation = async () => {
-        try {
-            const res = await fetch("/api/send", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify({
-                    email: receiverEmail,
-                    userName: user.given_name,
-                    code: teamId,
-                    teamName: teamName
-                })
-            });
-            if(res.status !== 200) {
-                toast.error("Can't send invitation");
-            }else{
-                toast.success("Invitation sent successfully");
-                console.log(res);
-            }
-        } catch (error) {
-            console.log(error);
-            toast.error("Can't send invitation");
-        }
-    }
-
-
     return (
         <div className="flex justify-end w-full gap-2 items-center">
             {/* Join team */}
